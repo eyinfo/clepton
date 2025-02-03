@@ -13,7 +13,7 @@ components.
 
 #### Documentation
 
-- [中文文档](/zh/README.md)
+- [中文文档](/lang/zh/README.md)
 
 #### Update content
 
@@ -39,3 +39,5 @@ components.
 ```xml
 
 ```
+
+#### Springboot/cloud Fast integration

@@ -1,0 +1,42 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+mavenPublishing {
+    coordinates(GROUP_ID, ARTIFACT_ID, VERSION)
+    pom {
+        name = ARTIFACT_ID
+        description = DESCRIPTION
+        url = PROJECT_URL
+        licenses {
+            license {
+                name = SOURCE_LICENSE_NAME
+                url = SOURCE_LICENSE_URL
+                distribution = SOURCE_LICENSE_DISTRIBUTION
+            }
+        }
+        developers {
+            developer {
+                name = DEVELOP_NAME
+                url = PROJECT_URL
+                email = DEVELOP_EMAIL
+            }
+        }
+        scm {
+            connection = "scm:git:git://github.com/${GIT_RELATIVE_URL}"
+            developerConnection = "scm:git:ssh://github.com/${GIT_RELATIVE_URL}"
+            url = "https://github.com/${GIT_RELATIVE_URL}"
+        }
+    }
+    // 发布到Sonatype时需要设置SonatypeHost
+    // SonatypeHost.CENTRAL_PORTAL
+    // SonatypeHost.DEFAULT
+    // SonatypeHost.S01
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
+}

@@ -25,7 +25,7 @@ def getRepositoryUrl() {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -58,6 +58,13 @@ publishing {
 
 // 进行数字签名
 signing {
-    required { isReleaseBuild() && gradle.taskGraph.hasTask("publish") } // 替换 "uploadArchives" 为 "publish"
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("publish") }
     sign publishing.publications.mavenJava // 使用 mavenJava 来签名
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
 }
