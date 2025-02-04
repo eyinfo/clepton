@@ -1,0 +1,30 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+plugins {
+    id 'java-library'
+    id "maven-publish"
+    id "com.vanniktech.maven.publish" version "0.30.0"
+    id "signing"
+}
+
+group GROUP_ID
+version VERSION
+
+repositories {
+    mavenCentral()
+    maven { url 'https://mvn.geease.com/repository/cloud-group/' }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+}
+
+apply from: 'nexus-push.gradle'
+//apply from: 'sonatype-push.gradle'
+//mavenPublishing {
+//    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL);
+//}
