@@ -37,7 +37,11 @@ components.
 #### Dependent reference
 
 ```xml
-
+<dependency>
+    <groupId>io.github.eyinfo</groupId>
+    <artifactId>webx</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
 
 #### Springboot/cloud Fast integration

@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 mavenPublishing {
     coordinates(GROUP_ID, ARTIFACT_ID, VERSION)
     pom {
@@ -30,7 +28,7 @@ mavenPublishing {
     // SonatypeHost.CENTRAL_PORTAL
     // SonatypeHost.DEFAULT
     // SonatypeHost.S01
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+//    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 }
 

@@ -32,6 +32,10 @@ Api开发提供丰富的数据响应格式。为微服务组件提供可插拔�
 #### 依赖引用
 
 ```xml
-
+<dependency>
+    <groupId>io.github.eyinfo</groupId>
+    <artifactId>webx</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
 #### Springboot/cloud 快速集成
