@@ -1,0 +1,70 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+Properties properties = new Properties()
+File localPropertiesFile = project.rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    InputStream inputStream = localPropertiesFile.newDataInputStream()
+    properties.load(inputStream)
+} else {
+    throw new FileNotFoundException("local.properties not found.")
+}
+
+repositories {
+    mavenCentral()
+}
+
+// 判断版本是Release or Snapshots
+def isReleaseBuild() {
+    return !VERSION.contains("SNAPSHOT")
+}
+
+// 获取仓库url
+def getRepositoryUrl() {
+    return isReleaseBuild() ? RELEASE_URL : SNAPSHOT_URL
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                version = VERSION
+                artifactId = ARTIFACT_ID
+                groupId = GROUP_ID
+            }
+
+            // 上传源码
+            artifact sourcesJar // 直接引用已经定义的任务
+        }
+    }
+
+    repositories {
+        maven {
+            url = getRepositoryUrl()
+            credentials {
+                username = properties.getProperty('NAME')
+                password = properties.getProperty('PASSWORD')
+            }
+        }
+    }
+}
+
+// 进行数字签名
+signing {
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("publish") }
+    sign publishing.publications.mavenJava // 使用 mavenJava 来签名
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
+}
